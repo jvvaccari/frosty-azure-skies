@@ -1,16 +1,7 @@
 
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
 
-interface WeatherCardProps {
-  title: string;
-  value: string | number;
-  unit: string;
-  icon: LucideIcon;
-  description?: string;
-}
-
-const WeatherCard: React.FC<WeatherCardProps> = ({ title, value, unit, icon: Icon, description }) => {
+const WeatherCard = ({ title, value, unit, icon: Icon, description }) => {
   return (
     <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:scale-105">
       <div className="flex items-center justify-between mb-4">

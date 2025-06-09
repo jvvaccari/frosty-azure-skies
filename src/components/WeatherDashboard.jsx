@@ -12,29 +12,9 @@ import {
   Gauge
 } from 'lucide-react';
 
-// Mock weather data structure - this will be replaced with actual API data
-interface WeatherData {
-  temperature: number;
-  relativeHumidity: number;
-  apparentTemperature: number;
-  probabilityOfPrecipitation: number;
-  precipitation: number;
-  rain: number;
-  snowfall: number;
-  seaLevelPressure: number;
-  cloudCover: number;
-  windSpeed: number;
-  windGusts: number;
-  visibility: number;
-}
-
-interface WeatherDashboardProps {
-  weatherData?: WeatherData;
-}
-
-const WeatherDashboard: React.FC<WeatherDashboardProps> = ({ weatherData }) => {
+const WeatherDashboard = ({ weatherData }) => {
   // Mock data for demonstration - replace with actual API data
-  const defaultData: WeatherData = {
+  const defaultData = {
     temperature: 24,
     relativeHumidity: 65,
     apparentTemperature: 27,
