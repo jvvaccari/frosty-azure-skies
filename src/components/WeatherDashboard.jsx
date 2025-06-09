@@ -119,15 +119,15 @@ const WeatherDashboard = ({ weatherData }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Weather Dashboard</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-3">Weather Dashboard</h1>
+          <p className="text-base text-gray-600 max-w-2xl mx-auto">
             Real-time weather conditions and atmospheric data at your location
           </p>
-          <div className="mt-6 p-4 rounded-xl" style={{ backgroundColor: '#C4E1E6' }}>
+          <div className="mt-4 inline-block p-3 rounded-lg" style={{ backgroundColor: '#C4E1E6' }}>
             <p className="text-sm text-gray-700 font-medium">
               Last updated: {new Date().toLocaleString()}
             </p>
@@ -135,7 +135,7 @@ const WeatherDashboard = ({ weatherData }) => {
         </div>
 
         {/* Weather Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
           {weatherMetrics.map((metric, index) => (
             <WeatherCard
               key={index}
@@ -149,9 +149,9 @@ const WeatherDashboard = ({ weatherData }) => {
         </div>
 
         {/* Footer */}
-        <div className="mt-12 text-center">
-          <div className="p-6 rounded-xl" style={{ backgroundColor: '#C4E1E6' }}>
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">Ready for API Integration</h3>
+        <div className="text-center">
+          <div className="inline-block p-4 rounded-lg" style={{ backgroundColor: '#C4E1E6' }}>
+            <h3 className="text-base font-semibold text-gray-800 mb-2">Ready for API Integration</h3>
             <p className="text-sm text-gray-700">
               Replace the mock data in WeatherDashboard component with your weather API data
             </p>
