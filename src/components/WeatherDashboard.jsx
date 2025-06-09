@@ -1,4 +1,3 @@
-
 import React from 'react';
 import WeatherCard from './WeatherCard';
 import { 
@@ -120,7 +119,7 @@ const WeatherDashboard = ({ weatherData }) => {
 
   return (
     <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-3">Weather Dashboard</h1>
@@ -134,8 +133,8 @@ const WeatherDashboard = ({ weatherData }) => {
           </div>
         </div>
 
-        {/* Weather Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+        {/* Weather Grid - Centralized 3-column layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 justify-items-center">
           {weatherMetrics.map((metric, index) => (
             <WeatherCard
               key={index}
