@@ -120,7 +120,7 @@ const WeatherDashboard = ({ weatherData }) => {
 
   return (
     <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-3">Weather Dashboard</h1>
@@ -134,8 +134,8 @@ const WeatherDashboard = ({ weatherData }) => {
           </div>
         </div>
 
-        {/* Weather Grid - 4-column layout like in the image */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {/* Weather Grid - Single column layout like in the image */}
+        <div className="grid grid-cols-1 gap-6 mb-8 max-w-2xl mx-auto">
           {weatherMetrics.map((metric, index) => (
             <WeatherCard
               key={index}
