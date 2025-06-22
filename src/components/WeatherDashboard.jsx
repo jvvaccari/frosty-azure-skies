@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import WeatherCard from "./WeatherCard";
 import {
   Thermometer,
@@ -10,103 +11,65 @@ import {
   Gauge,
 } from "lucide-react";
 
-const WeatherDashboard = ({ weatherData }) => {
-  const defaultData = {
-    temperature: 24,
-    relativeHumidity: 65,
-    apparentTemperature: 27,
-    probabilityOfPrecipitation: 30,
-    precipitation: 0.5,
-    rain: 0.3,
-    snowfall: 0,
-    seaLevelPressure: 1013.2,
-    cloudCover: 45,
-    windSpeed: 12,
-    windGusts: 18,
-    visibility: 10,
-  };
+const WeatherDashboard = () => {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
 
-  const data = weatherData || defaultData;
+  useEffect(() => {
+    fetch("http://localhost:8081/weather")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Erro ao buscar dados da API");
+        }
+        return response.json();
+      })
+      .then((json) => {
+        setData(json);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setFetchError(err.message);
+        setIsLoading(false);
+      });
+  }, []);
+
+  if (isLoading) return <p>Carregando dados do tempo...</p>;
+  if (fetchError) return <p>Erro: {fetchError}</p>;
 
   const metrics = [
-    { title: "Temperature", value: data.temperature, unit: "°C", icon: Thermometer },
-    { title: "Feels Like", value: data.apparentTemperature, unit: "°C", icon: Thermometer },
-    { title: "Humidity", value: data.relativeHumidity, unit: "%", icon: Droplets },
-    { title: "Rain Chance", value: data.probabilityOfPrecipitation, unit: "%", icon: CloudRain },
-    { title: "Precipitation", value: data.precipitation, unit: "mm", icon: CloudRain },
-    { title: "Rain", value: data.rain, unit: "mm", icon: CloudRain },
-    { title: "Snowfall", value: data.snowfall, unit: "mm", icon: CloudSnow },
-    { title: "Pressure", value: data.seaLevelPressure, unit: "hPa", icon: Gauge },
-    { title: "Clouds", value: data.cloudCover, unit: "%", icon: Cloud },
-    { title: "Wind Speed", value: data.windSpeed, unit: "km/h", icon: Wind },
-    { title: "Wind Gusts", value: data.windGusts, unit: "km/h", icon: Wind },
-    { title: "Visibility", value: data.visibility, unit: "km", icon: Eye },
+    { title: "Temperatura", value: data.temperature, unit: "°C", icon: Thermometer },
+    { title: "Sensação Térmica", value: data.apparentTemperature, unit: "°C", icon: Thermometer },
+    { title: "Umidade", value: data.relativeHumidity, unit: "%", icon: Droplets },
+    { title: "Chance de Chuva", value: data.probabilityOfPrecipitation, unit: "%", icon: CloudRain },
+    { title: "Precipitação", value: data.precipitation, unit: "mm", icon: CloudRain },
+    { title: "Chuva", value: data.rain, unit: "mm", icon: CloudRain },
+    { title: "Neve", value: data.snowfall, unit: "mm", icon: CloudSnow },
+    { title: "Pressão", value: data.seaLevelPressure, unit: "hPa", icon: Gauge },
+    { title: "Nuvens", value: data.cloudCover, unit: "%", icon: Cloud },
+    { title: "Vento", value: data.windSpeed, unit: "km/h", icon: Wind },
+    { title: "Ráfagas de Vento", value: data.windGusts, unit: "km/h", icon: Wind },
+    { title: "Visibilidade", value: data.visibility, unit: "km", icon: Eye },
   ];
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundColor: "#F9FAFB", // equivalente a bg-gray-50
-        paddingTop: "2.5rem",
-        paddingBottom: "2.5rem",
-        paddingLeft: "1.5rem",
-        paddingRight: "1.5rem",
-      }}
-    >
+    <div>
       <div
         style={{
-          maxWidth: "72rem", 
-          marginLeft: "auto",
-          marginRight: "auto",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+          gap: "1rem",
         }}
       >
-        <header style={{ marginBottom: "2.5rem", textAlign: "center" }}>
-          <h1
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: "700",
-              color: "#1F2937", 
-            }}
-          >
-            Weather Dashboard
-          </h1>
-          <p
-            style={{
-              fontSize: "0.875rem",
-              color: "#4B5563", 
-            }}
-          >
-            Up-to-date atmospheric and climate data
-          </p>
-          <p
-            style={{
-              fontSize: "0.75rem", 
-              marginTop: "0.5rem",
-              color: "#9CA3AF", 
-            }}
-          >
-            Last updated: {new Date().toLocaleString()}
-          </p>
-        </header>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(500px, 1fr))",
-            gap: "1rem",
-          }}
-        >
-          {metrics.map((metric, index) => (
-            <WeatherCard
-              key={index}
-              title={metric.title}
-              value={metric.value}
-              unit={metric.unit}
-              icon={metric.icon}
-            />
-          ))}
-        </div>
+        {metrics.map((metric, index) => (
+          <WeatherCard
+            key={index}
+            title={metric.title}
+            value={metric.value}
+            unit={metric.unit}
+            icon={metric.icon}
+          />
+        ))}
       </div>
     </div>
   );
