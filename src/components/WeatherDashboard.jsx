@@ -34,8 +34,8 @@ const WeatherDashboard = () => {
       });
   }, []);
 
-  if (isLoading) return <p>Carregando dados do tempo...</p>;
-  if (fetchError) return <p>Erro: {fetchError}</p>;
+  if (isLoading) return <p style={{ textAlign: "center", marginTop: 40 }}>Carregando dados do tempo...</p>;
+  if (fetchError) return <p style={{ textAlign: "center", marginTop: 40, color: "red" }}>Erro: {fetchError}</p>;
 
   const metrics = [
     { title: "Temperatura", value: data.temperature, unit: "°C", icon: Thermometer },
@@ -53,22 +53,48 @@ const WeatherDashboard = () => {
   ];
 
   return (
-    <div>
+    <div
+      style={{
+        maxWidth: 1200,
+        margin: "40px auto",
+        padding: "0 20px",
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      }}
+    >
+      <h1 style={{ textAlign: "center", marginBottom: 30, color: "#333" }}>
+        Weather Dashboard
+      </h1>
+
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-          gap: "1rem",
+          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          gap: "1.5rem",
         }}
       >
         {metrics.map((metric, index) => (
-          <WeatherCard
+          <div
             key={index}
-            title={metric.title}
-            value={metric.value}
-            unit={metric.unit}
-            icon={metric.icon}
-          />
+            style={{
+              backgroundColor: "#fff",
+              borderRadius: 10,
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+              padding: "1.5rem",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              transition: "transform 0.2s ease",
+              cursor: "default",
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
+            onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+          >
+            <metric.icon size={36} color="#4a90e2" />
+            <h3 style={{ margin: "12px 0 8px", color: "#222" }}>{metric.title}</h3>
+            <p style={{ fontSize: 24, fontWeight: "bold", margin: 0, color: "#111" }}>
+              {metric.value} {metric.unit}
+            </p>
+          </div>
         ))}
       </div>
     </div>
