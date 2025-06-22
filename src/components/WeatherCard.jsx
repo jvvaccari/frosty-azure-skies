@@ -1,23 +1,67 @@
-
-import React from 'react';
-
-const WeatherCard = ({ title, value, unit, icon: Icon, description }) => {
+const WeatherCard = ({ title, value, unit, icon: Icon }) => {
   return (
-    <div className="bg-white rounded-lg p-4 shadow-md border border-gray-100 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
-      <div className="flex items-center justify-between mb-3">
-        <div className="p-2 rounded-md" style={{ backgroundColor: '#C4E1E6' }}>
-          <Icon className="w-5 h-5 text-gray-700" />
+    <div
+      style={{
+        backgroundColor: "white",
+        padding: "1rem", 
+        borderRadius: "0.5rem", 
+        border: "1px solid #E5E7EB",
+        boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
+        transition: "box-shadow 0.2s ease-in-out",
+        cursor: "default",
+      }}
+      onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 4px 6px rgba(0,0,0,0.1)")} 
+      onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 1px 2px rgba(0,0,0,0.05)")}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.75rem", 
+          marginBottom: "0.75rem",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "#DBEAFE",
+            color: "#2563EB", 
+            padding: "0.5rem", 
+            borderRadius: "0.375rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Icon style={{ width: "1.25rem", height: "1.25rem" }} />
         </div>
+        <h3
+          style={{
+            fontSize: "0.875rem",
+            fontWeight: "500",
+            color: "#4B5563",
+            margin: 0,
+          }}
+        >
+          {title}
+        </h3>
       </div>
-      <div className="space-y-2">
-        <h3 className="text-xs font-medium text-gray-600 uppercase tracking-wide">{title}</h3>
-        <div className="flex items-baseline space-x-1">
-          <span className="text-xl font-bold text-gray-900">{value}</span>
-          <span className="text-xs font-medium text-gray-500">{unit}</span>
-        </div>
-        {description && (
-          <p className="text-xs text-gray-500 leading-tight">{description}</p>
-        )}
+      <div
+        style={{
+          fontSize: "1.25rem", 
+          fontWeight: "700", 
+          color: "#111827", 
+        }}
+      >
+        {value}{" "}
+        <span
+          style={{
+            fontSize: "0.875rem", 
+            fontWeight: "400", 
+            color: "#6B7280", 
+          }}
+        >
+          {unit}
+        </span>
       </div>
     </div>
   );

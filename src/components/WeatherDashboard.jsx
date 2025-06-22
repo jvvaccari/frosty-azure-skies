@@ -1,18 +1,16 @@
-import React from 'react';
-import WeatherCard from './WeatherCard';
-import { 
-  Thermometer, 
-  Droplets, 
-  CloudRain, 
-  Cloud, 
-  Wind, 
-  Eye, 
+import WeatherCard from "./WeatherCard";
+import {
+  Thermometer,
+  Droplets,
+  CloudRain,
+  Cloud,
+  Wind,
+  Eye,
   CloudSnow,
-  Gauge
-} from 'lucide-react';
+  Gauge,
+} from "lucide-react";
 
 const WeatherDashboard = ({ weatherData }) => {
-  // Mock data for demonstration - replace with actual API data
   const defaultData = {
     temperature: 24,
     relativeHumidity: 65,
@@ -25,136 +23,89 @@ const WeatherDashboard = ({ weatherData }) => {
     cloudCover: 45,
     windSpeed: 12,
     windGusts: 18,
-    visibility: 10
+    visibility: 10,
   };
 
   const data = weatherData || defaultData;
 
-  const weatherMetrics = [
-    {
-      title: 'Temperature',
-      value: data.temperature,
-      unit: '°C',
-      icon: Thermometer,
-      description: 'Current air temperature'
-    },
-    {
-      title: 'Apparent Temperature',
-      value: data.apparentTemperature,
-      unit: '°C',
-      icon: Thermometer,
-      description: 'Feels like temperature'
-    },
-    {
-      title: 'Relative Humidity',
-      value: data.relativeHumidity,
-      unit: '%',
-      icon: Droplets,
-      description: 'Moisture in the air'
-    },
-    {
-      title: 'Precipitation Probability',
-      value: data.probabilityOfPrecipitation,
-      unit: '%',
-      icon: CloudRain,
-      description: 'Chance of precipitation'
-    },
-    {
-      title: 'Precipitation',
-      value: data.precipitation,
-      unit: 'mm',
-      icon: CloudRain,
-      description: 'Total precipitation'
-    },
-    {
-      title: 'Rain',
-      value: data.rain,
-      unit: 'mm',
-      icon: CloudRain,
-      description: 'Rainfall amount'
-    },
-    {
-      title: 'Snowfall',
-      value: data.snowfall,
-      unit: 'mm',
-      icon: CloudSnow,
-      description: 'Snow accumulation'
-    },
-    {
-      title: 'Sea Level Pressure',
-      value: data.seaLevelPressure,
-      unit: 'hPa',
-      icon: Gauge,
-      description: 'Atmospheric pressure'
-    },
-    {
-      title: 'Cloud Cover',
-      value: data.cloudCover,
-      unit: '%',
-      icon: Cloud,
-      description: 'Sky coverage'
-    },
-    {
-      title: 'Wind Speed',
-      value: data.windSpeed,
-      unit: 'km/h',
-      icon: Wind,
-      description: 'Current wind speed'
-    },
-    {
-      title: 'Wind Gusts',
-      value: data.windGusts,
-      unit: 'km/h',
-      icon: Wind,
-      description: 'Maximum wind gusts'
-    },
-    {
-      title: 'Visibility',
-      value: data.visibility,
-      unit: 'km',
-      icon: Eye,
-      description: 'Visual range'
-    }
+  const metrics = [
+    { title: "Temperature", value: data.temperature, unit: "°C", icon: Thermometer },
+    { title: "Feels Like", value: data.apparentTemperature, unit: "°C", icon: Thermometer },
+    { title: "Humidity", value: data.relativeHumidity, unit: "%", icon: Droplets },
+    { title: "Rain Chance", value: data.probabilityOfPrecipitation, unit: "%", icon: CloudRain },
+    { title: "Precipitation", value: data.precipitation, unit: "mm", icon: CloudRain },
+    { title: "Rain", value: data.rain, unit: "mm", icon: CloudRain },
+    { title: "Snowfall", value: data.snowfall, unit: "mm", icon: CloudSnow },
+    { title: "Pressure", value: data.seaLevelPressure, unit: "hPa", icon: Gauge },
+    { title: "Clouds", value: data.cloudCover, unit: "%", icon: Cloud },
+    { title: "Wind Speed", value: data.windSpeed, unit: "km/h", icon: Wind },
+    { title: "Wind Gusts", value: data.windGusts, unit: "km/h", icon: Wind },
+    { title: "Visibility", value: data.visibility, unit: "km", icon: Eye },
   ];
 
   return (
-    <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-3">Weather Dashboard</h1>
-          <p className="text-base text-gray-600 max-w-2xl mx-auto">
-            Real-time weather conditions and atmospheric data at your location
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#F9FAFB", // equivalente a bg-gray-50
+        paddingTop: "2.5rem",
+        paddingBottom: "2.5rem",
+        paddingLeft: "1.5rem",
+        paddingRight: "1.5rem",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "72rem", 
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <header style={{ marginBottom: "2.5rem", textAlign: "center" }}>
+          <h1
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: "700",
+              color: "#1F2937", 
+            }}
+          >
+            Weather Dashboard
+          </h1>
+          <p
+            style={{
+              fontSize: "0.875rem",
+              color: "#4B5563", 
+            }}
+          >
+            Up-to-date atmospheric and climate data
           </p>
-          <div className="mt-4 inline-block p-3 rounded-lg" style={{ backgroundColor: '#C4E1E6' }}>
-            <p className="text-sm text-gray-700 font-medium">
-              Last updated: {new Date().toLocaleString()}
-            </p>
-          </div>
-        </div>
+          <p
+            style={{
+              fontSize: "0.75rem", 
+              marginTop: "0.5rem",
+              color: "#9CA3AF", 
+            }}
+          >
+            Last updated: {new Date().toLocaleString()}
+          </p>
+        </header>
 
-        {/* Weather Grid - Centralized 3-column layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 justify-items-center">
-          {weatherMetrics.map((metric, index) => (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(500px, 1fr))",
+            gap: "1rem",
+          }}
+        >
+          {metrics.map((metric, index) => (
             <WeatherCard
               key={index}
               title={metric.title}
               value={metric.value}
               unit={metric.unit}
               icon={metric.icon}
-              description={metric.description}
             />
           ))}
-        </div>
-
-        {/* Footer */}
-        <div className="text-center">
-          <div className="inline-block p-4 rounded-lg" style={{ backgroundColor: '#C4E1E6' }}>
-            <h3 className="text-base font-semibold text-gray-800 mb-2">Ready for API Integration</h3>
-            <p className="text-sm text-gray-700">
-              Replace the mock data in WeatherDashboard component with your weather API data
-            </p>
-          </div>
         </div>
       </div>
     </div>
