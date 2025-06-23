@@ -119,13 +119,20 @@ const WeatherDashboard = () => {
           marginBottom: 30,
         }}
       >
-        <h1 style={{ textAlign: "center", color: "#fff",fontWeight: "bold" }}>
+        <h1 style={{ textAlign: "center", color: "#fff", fontWeight: "bold" }}>
           Weather Dashboard
         </h1>
       </div>
 
       {lastUpdate && (
-        <p style={{ textAlign: "center", marginBottom: 20, color: "#666", fontSize: 18 }}>
+        <p
+          style={{
+            textAlign: "center",
+            marginBottom: 20,
+            color: "#666",
+            fontSize: 18,
+          }}
+        >
           Última atualização: {lastUpdate.toLocaleDateString()}{" "}
           {lastUpdate.toLocaleTimeString()}
         </p>
@@ -149,6 +156,29 @@ const WeatherDashboard = () => {
           />
         ))}
       </div>
+      <button
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: "12px 20px",
+          backgroundColor: "#4a90e2",
+          color: "#fff",
+          fontSize: "18px",
+          fontWeight: "bold",
+          border: "none",
+          borderRadius: "8px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          cursor: "pointer",
+          margin: "30px auto 0",
+          transition: "background-color 0.3s ease",
+          maxWidth: "300px",
+        }}
+        onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#357ABD")}
+        onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#4a90e2")}
+      >
+        Histórico do Clima
+      </button>
     </div>
   );
 };
