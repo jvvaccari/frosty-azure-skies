@@ -35,7 +35,7 @@ const WeatherDashboard = () => {
       setAlerts(weatherAlert);
       setFetchError(null);
 
-       setLastUpdate(new Date());
+      setLastUpdate(new Date());
     } catch (err) {
       setFetchError(err.message);
     }
@@ -112,12 +112,20 @@ const WeatherDashboard = () => {
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       }}
     >
-      <h1 style={{ textAlign: "center", marginBottom: 30, color: "#333" }}>
-        Weather Dashboard
-      </h1>
+      <div
+        style={{
+          padding: "12px",
+          backgroundColor: "#4a90e2",
+          marginBottom: 30,
+        }}
+      >
+        <h1 style={{ textAlign: "center", color: "#fff",fontWeight: "bold" }}>
+          Weather Dashboard
+        </h1>
+      </div>
 
-       {lastUpdate && (
-        <p style={{ textAlign: "center", marginBottom: 20, color: "#666" }}>
+      {lastUpdate && (
+        <p style={{ textAlign: "center", marginBottom: 20, color: "#666", fontSize: 18 }}>
           Última atualização: {lastUpdate.toLocaleDateString()}{" "}
           {lastUpdate.toLocaleTimeString()}
         </p>
