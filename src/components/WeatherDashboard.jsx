@@ -24,17 +24,14 @@ const WeatherDashboard = () => {
         fetch("http://localhost:8081/weather/alerts"),
       ]);
 
-      if (!weatherRes.ok || !alertsRes.ok) {
-        throw new Error("Erro ao buscar dados da API");
-      }
-
       const weatherData = await weatherRes.json();
-      const weatherAlert = await alertsRes.json();
+
+      const weatherAlert =
+        alertsRes.status === 204 || !alertsRes.ok ? {} : await alertsRes.json();
 
       setData(weatherData);
       setAlerts(weatherAlert);
       setFetchError(null);
-
       setLastUpdate(new Date());
     } catch (err) {
       setFetchError(err.message);
