@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
 import WeatherCard from "./WeatherCard";
+import { useLocation } from "react-router-dom";
 import {
   Thermometer,
   Droplets,
@@ -11,45 +11,7 @@ import {
   Gauge,
 } from "lucide-react";
 
-const WeatherDashboard = () => {
-  const [data, setData] = useState(null);
-  const [alerts, setAlerts] = useState(null);
-  const [fetchError, setFetchError] = useState(null);
-  const [lastUpdate, setLastUpdate] = useState(null);
-
-  const fetchData = async () => {
-    try {
-      const [weatherRes, alertsRes] = await Promise.all([
-        fetch("http://localhost:8081/weather/data"),
-        fetch("http://localhost:8081/weather/alerts"),
-      ]);
-
-      const weatherData = await weatherRes.json();
-
-      const weatherAlert =
-        alertsRes.status === 204 || !alertsRes.ok ? {} : await alertsRes.json();
-
-      setData(weatherData);
-      setAlerts(weatherAlert);
-      setFetchError(null);
-      setLastUpdate(new Date());
-    } catch (err) {
-      setFetchError(err.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-    const intervalId = setInterval(fetchData, 30000);
-    return () => clearInterval(intervalId);
-  }, []);
-
-  if (!data || !alerts) return null;
-
-  if (fetchError) {
-    console.error(fetchError);
-  }
-
+const WeatherDashboard = ({ data, alerts, lastUpdate }) => {
   const metrics = [
     {
       title: "Temperatura",
@@ -100,6 +62,8 @@ const WeatherDashboard = () => {
     { title: "Visibilidade", value: data.visibility, unit: "km", icon: Eye },
   ];
 
+  const location = useLocation();
+
   return (
     <div
       style={{
@@ -109,72 +73,67 @@ const WeatherDashboard = () => {
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       }}
     >
-      <div
+      <header
         style={{
-          padding: "12px",
-          backgroundColor: "#4a90e2",
-          marginBottom: 30,
+          padding: "16px",
+          background: "linear-gradient(90deg, #4a90e2 60%, #357ab8 100%)",
+          marginBottom: 32,
+          borderRadius: 12,
+          boxShadow: "0 2px 12px rgba(74,144,226,0.08)",
         }}
       >
-        <h1 style={{ textAlign: "center", color: "#fff", fontWeight: "bold" }}>
-          Weather Dashboard
+        <h1
+          style={{
+            textAlign: "center",
+            color: "#fff",
+            fontWeight: 700,
+            letterSpacing: 1,
+            fontSize: 24,
+            margin: 0,
+          }}
+        >
+          {location.pathname === "/" ? "Weather Dashboard" : "Histórico do Clima"}
         </h1>
-      </div>
+      </header>
 
       {lastUpdate && (
         <p
           style={{
             textAlign: "center",
-            marginBottom: 20,
-            color: "#666",
+            marginBottom: 24,
+            color: "#4a90e2",
             fontSize: 18,
+            fontWeight: 500,
+            letterSpacing: 0.5,
           }}
         >
-          Última atualização: {lastUpdate.toLocaleDateString()}{" "}
-          {lastUpdate.toLocaleTimeString()}
+          Última atualização:{" "}
+          <span style={{ fontWeight: 700 }}>
+            {lastUpdate.toLocaleDateString()} {lastUpdate.toLocaleTimeString()}
+          </span>
         </p>
       )}
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-          gap: "1.5rem",
-        }}
-      >
-        {metrics.map((metric, index) => (
-          <WeatherCard
-            key={index}
-            title={metric.title}
-            value={metric.value}
-            unit={metric.unit}
-            icon={metric.icon}
-            alert={alerts[metric.title]}
-          />
-        ))}
-      </div>
-      <button
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          padding: "12px 20px",
-          backgroundColor: "#4a90e2",
-          color: "#fff",
-          fontSize: "18px",
-          border: "none",
-          borderRadius: "8px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          cursor: "pointer",
-          margin: "30px auto 0",
-          transition: "background-color 0.3s ease",
-          maxWidth: "300px",
-        }}
-        onMouseOver={(e) => (e.currentTarget.style.backgroundColor = "#357ABD")}
-        onMouseOut={(e) => (e.currentTarget.style.backgroundColor = "#4a90e2")}
-      >
-        Histórico do Clima
-      </button>
+      <main>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "1.5rem",
+          }}
+        >
+          {metrics.map((metric, index) => (
+            <WeatherCard
+              key={index}
+              title={metric.title}
+              value={metric.value}
+              unit={metric.unit}
+              icon={metric.icon}
+              alert={alerts[metric.title]}
+            />
+          ))}
+        </div>
+      </main>
     </div>
   );
 };
