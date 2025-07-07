@@ -42,6 +42,26 @@ const LiveWeather = () => {
     console.error(fetchError);
   }
 
+  const dowloadHistoryWeather = async () => {
+    try {
+      const response = await fetch("http://localhost:8087/history/download");
+      if (!response.ok) {
+        throw new Error("Falha ao baixar o arquivo");
+      }
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "weather-history.json";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Erro ao baixar histórico:", error);
+    }
+  };
+
   return (
     <div>
       <Outlet />
@@ -76,7 +96,7 @@ const LiveWeather = () => {
             onMouseOut={(e) =>
               (e.currentTarget.style.backgroundColor = "#4a90e2")
             }
-            onClick={() => navigate("/history")}
+            onClick={() => dowloadHistoryWeather()}
           >
             Histórico do Clima
           </button>
