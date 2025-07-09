@@ -32,7 +32,7 @@ const LiveWeather = () => {
 
   useEffect(() => {
     fetchData();
-    const intervalId = setInterval(fetchData, 30000);
+    const intervalId = setInterval(fetchData, 32000);
     return () => clearInterval(intervalId);
   }, []);
 
